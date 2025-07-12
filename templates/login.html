@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ATTENDMAX</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo-container">
+                <img src="/static/images/logo.png" alt="ATTENDMAX Logo" id="logo">
+                <span class="brand-name">ATTENDMAX</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/login" class="active login-btn">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="login-main">
+        <div class="login-container">
+            <h2>Welcome Back</h2>
+            <div class="login-tabs">
+                <button class="tab-btn active" data-role="student">Student</button>
+                <button class="tab-btn" data-role="admin">Admin</button>
+            </div>
+            <form id="loginForm" class="login-form">
+                <input type="hidden" name="role" id="roleInput" value="student">
+                <div class="form-group">
+                    <label for="username">Email</label>
+                    <input type="email" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+                <div class="login-footer">
+                    <p class="error-message" id="errorMessage"></p>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 ATTENDMAX. All rights reserved.</p>
+            <p>Powered by cutting-edge QR technology</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/login.js"></script>
+    <script>
+        console.log('Login page loaded');
+    </script>
+</body>
+</html>

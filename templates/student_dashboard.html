@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - ATTENDMAX</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- Add QR Scanner library -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo-container">
+                <img src="/static/images/logo.png" alt="ATTENDMAX Logo" id="logo">
+                <span class="brand-name">ATTENDMAX</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/student/dashboard" class="active">Dashboard</a></li>
+                <li><a href="/student/attendance">My Attendance</a></li>
+                <li><a href="/logout" class="login-btn">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="dashboard-main">
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <h1>Student Dashboard</h1>
+                <p class="welcome-text">Welcome back, <span id="studentName">Student</span></p>
+            </div>
+
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <h3>Total Classes</h3>
+                    <p class="stat-number" id="totalClasses">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Classes Attended</h3>
+                    <p class="stat-number" id="classesAttended">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Attendance %</h3>
+                    <p class="stat-number" id="attendancePercentage">0%</p>
+                </div>
+            </div>
+
+            <div class="dashboard-sections">
+                <section class="qr-scanner">
+                    <h2>QR Code Scanner</h2>
+                    <div class="scanner-container">
+                        <div id="scanner-placeholder" class="scanner-placeholder">
+                            <button id="startScanner" class="primary-btn">Start Scanner</button>
+                        </div>
+                        <div id="qr-reader" style="width: 100%"></div>
+                        <div id="scanResult" class="scan-result hidden">
+                            <p id="scanMessage"></p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="attendance-history">
+                    <h2>Recent Attendance</h2>
+                    <div class="attendance-list" id="attendanceList">
+                        <!-- Attendance history will be populated by JavaScript -->
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 ATTENDMAX. All rights reserved.</p>
+            <p>Powered by cutting-edge QR technology</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/student-dashboard.js"></script>
+</body>
+</html>

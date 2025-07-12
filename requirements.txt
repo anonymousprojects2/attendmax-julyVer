@@ -1,0 +1,7 @@
+flask==3.0.0
+flask-cors==4.0.0
+firebase-admin==6.2.0
+qrcode==7.4.2
+pillow==9.5.0
+opencv-python-headless==4.8.0.74
+pyzbar==0.1.9
