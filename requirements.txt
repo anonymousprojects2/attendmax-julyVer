@@ -1,16 +1,16 @@
-Flask==2.0.1
-Flask-Cors==3.0.10
-firebase-admin==5.0.0
-qrcode==7.3
-Pillow==8.3.2
-python-dotenv==0.19.0
-Werkzeug==2.0.1
-gunicorn==20.1.0
-requests==2.26.0
+Flask==2.3.3
+Flask-Cors==4.0.0
+firebase-admin==6.2.0
+qrcode==7.4.2
+Pillow==10.0.0
+python-dotenv==1.0.0
+Werkzeug==2.3.7
+gunicorn==21.2.0
+requests==2.31.0
 python-dateutil==2.8.2
-PyJWT==2.1.0
+PyJWT==2.8.0
 uuid==1.30
-openpyxl==3.0.9  # For Excel file handling
-reportlab==3.6.2  # For PDF generation
+openpyxl==3.1.2  # For Excel file handling
+reportlab==4.0.7  # For PDF generation
 pdfkit==1.0.0    # For HTML to PDF conversion
-python-docx==0.8.11  # For Word document handling
+python-docx==1.0.1  # For Word document handling
