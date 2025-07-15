@@ -6,42 +6,209 @@
     <title>Admin Dashboard - ATTENDMAX</title>
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
-    <header>
-        <nav>
-            <div class="logo-container">
-                <img src="/static/images/logo.png" alt="ATTENDMAX Logo" id="logo">
-                <span class="brand-name">ATTENDMAX</span>
+<body class="admin-body">
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <img src="/static/images/logo.png" alt="ATTENDMAX Logo" class="sidebar-logo">
+                <h1 class="sidebar-title">ATTENDMAX</h1>
             </div>
-            <ul class="nav-links">
-                <li><a href="/admin/dashboard" class="active">Dashboard</a></li>
-                <li><a href="/logout" class="login-btn">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main class="dashboard-main">
-        <div class="dashboard-container">
-            <div class="dashboard-header">
-                <h1>Admin Dashboard</h1>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active">
+                        <a href="#dashboard-section" class="sidebar-link" data-section="dashboard-section">
+                            <i class="fas fa-tachometer-alt"></i> <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#qr-section" class="sidebar-link" data-section="qr-section">
+                            <i class="fas fa-qrcode"></i> <span>QR Generation</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#records-section" class="sidebar-link" data-section="records-section">
+                            <i class="fas fa-clipboard-list"></i> <span>Attendance Records</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#students-section" class="sidebar-link" data-section="students-section">
+                            <i class="fas fa-user-graduate"></i> <span>Student Management</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#faculty-section" class="sidebar-link" data-section="faculty-section">
+                            <i class="fas fa-chalkboard-teacher"></i> <span>Faculty Management</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#courses-section" class="sidebar-link" data-section="courses-section">
+                            <i class="fas fa-book"></i> <span>Course Management</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#timetable-section" class="sidebar-link" data-section="timetable-section">
+                            <i class="fas fa-calendar-alt"></i> <span>Timetable</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#exams-section" class="sidebar-link" data-section="exams-section">
+                            <i class="fas fa-file-alt"></i> <span>Examinations</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#results-section" class="sidebar-link" data-section="results-section">
+                            <i class="fas fa-graduation-cap"></i> <span>Results</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#library-section" class="sidebar-link" data-section="library-section">
+                            <i class="fas fa-book-reader"></i> <span>Library</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#fees-section" class="sidebar-link" data-section="fees-section">
+                            <i class="fas fa-rupee-sign"></i> <span>Fees Management</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#notifications-section" class="sidebar-link" data-section="notifications-section">
+                            <i class="fas fa-bell"></i> <span>Notifications</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#attendance-edit-section" class="sidebar-link" data-section="attendance-edit-section">
+                            <i class="fas fa-edit"></i> <span>Edit Attendance</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#reports-section" class="sidebar-link" data-section="reports-section">
+                            <i class="fas fa-chart-bar"></i> <span>Reports</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="/logout" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+                </a>
             </div>
+        </aside>
 
-            <div class="dashboard-sections">
-                <!-- QR Code Generation Section -->
-                <section class="qr-generator">
-                    <h2>Generate QR Code</h2>
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="header-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search records...">
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-icon" id="darkModeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="admin-profile">
+                        <span class="admin-name">Admin</span>
+                        <div class="admin-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="admin-content">
+                <!-- Dashboard Section -->
+                <section id="dashboard-section" class="content-section active">
+                    <h2 class="section-title">Dashboard Overview</h2>
+                    
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Total Students</h3>
+                                <p id="totalStudents">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Today's Attendance</h3>
+                                <p id="todayAttendance">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Active Sessions</h3>
+                                <p id="activeSessions">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Total Subjects</h3>
+                                <p id="totalSubjects">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-card">
+                            <h3>Attendance Trends</h3>
+                            <canvas id="attendanceChart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Department Stats</h3>
+                            <canvas id="departmentChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-activity-card">
+                        <div class="card-header">
+                            <h3>Recent Activity</h3>
+                            <button class="btn-text">View All</button>
+                        </div>
+                        <div class="card-body" id="recentActivityList">
+                            <!-- Will be populated by JavaScript -->
+                            <div class="activity-empty">No recent activities found</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- QR Generation Section -->
+                <section id="qr-section" class="content-section">
+                    <h2 class="section-title">QR Code Generation</h2>
+                    
+                    <div class="qr-container-wrapper">
+                        <div class="qr-flex-container">
+                            <div class="qr-form-card">
                     <form id="qrForm" class="qr-form">
+                                    <h3>Generate Attendance QR Code</h3>
                         <div class="form-group">
                             <label for="department">Department:</label>
                             <select id="department" name="department" required>
                                 <option value="">Select Department</option>
+                                <option value="AIDS">AI & Data Science</option>
+                                <option value="CY">Cyber Security</option>
                                 <option value="CSE">Computer Science</option>
-                                <option value="ECE">Electronics</option>
-                                <option value="ME">Mechanical</option>
-                                <option value="CE">Civil</option>
-                                <option value="AIDS">AI & DS</option>
+                                <option value="AIML">AI & Machine Learning</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -54,30 +221,77 @@
                                 <option value="LY">Final Year</option>
                             </select>
                         </div>
+                        <div class="form-group" id="semesterGroup" style="display: none;">
+                            <label for="semester">Semester:</label>
+                            <select id="semester" name="semester" required>
+                                <option value="">Select Semester</option>
+                                <!-- Will be populated based on year selection -->
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="subject">Subject:</label>
-                            <input type="text" id="subject" name="subject" required placeholder="Enter subject name">
+                            <select id="subject" name="subject" required>
+                                <option value="">Select Subject</option>
+                                <!-- Will be populated based on department, year and semester -->
+                            </select>
                         </div>
-                        <button type="submit" class="primary-btn">Generate QR Code</button>
+                                    <button type="submit" class="primary-btn">
+                                        <i class="fas fa-qrcode"></i> Generate QR Code
+                                    </button>
                     </form>
-                    <div id="qrContainer" class="qr-container hidden"></div>
+                            </div>
+                            
+                            <div id="qrContainer" class="qr-display-card hidden">
+                                <div class="qr-preview">
+                                    <div class="qr-image-container">
+                                        <!-- QR Image will be inserted here -->
+                                    </div>
+                                    <div id="qrInfo" class="qr-info">
+                                        <!-- QR Info will be inserted here -->
+                                    </div>
+                                </div>
+                                <div class="qr-actions">
+                                    <button id="regenerateQR" class="btn-outline">
+                                        <i class="fas fa-redo"></i> Regenerate
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qr-instructions">
+                            <div class="instruction-card">
+                                <div class="instruction-icon">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                                <div class="instruction-text">
+                                    <h4>How to Use QR Codes</h4>
+                                    <p>Generate a QR code for your class and display it to students. Students can scan the QR code using the student dashboard to mark their attendance. Each QR code is valid for 60 seconds.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
                 </section>
 
                 <!-- Attendance Records Section -->
-                <section class="attendance-records">
-                    <h2>Attendance Records</h2>
+                <section id="records-section" class="content-section">
+                    <h2 class="section-title">Attendance Records</h2>
                     
-                    <!-- Filters -->
+                    <div class="filter-card">
                     <form id="filterForm" class="filter-form">
+                            <div class="filter-row">
                         <div class="filter-group">
+                                    <label for="filterDepartment">Department</label>
                             <select id="filterDepartment">
                                 <option value="">All Departments</option>
+                                <option value="AIDS">AI & Data Science</option>
+                                <option value="CY">Cyber Security</option>
                                 <option value="CSE">Computer Science</option>
-                                <option value="ECE">Electronics</option>
-                                <option value="ME">Mechanical</option>
-                                <option value="CE">Civil</option>
-                                <option value="AIDS">AI & DS</option>
+                                <option value="AIML">AI & Machine Learning</option>
                             </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label for="filterYear">Year</label>
                             <select id="filterYear">
                                 <option value="">All Years</option>
                                 <option value="FY">First Year</option>
@@ -85,22 +299,47 @@
                                 <option value="TY">Third Year</option>
                                 <option value="LY">Final Year</option>
                             </select>
-                            <input type="text" id="filterSubject" placeholder="Subject">
-                            <input type="text" id="datePicker" placeholder="Select Date">
-                            <button type="submit" class="secondary-btn">Apply Filters</button>
-                            <button type="button" id="clearFilters" class="outline-btn">Clear</button>
+                                </div>
+                                <div class="filter-group">
+                                    <label for="filterSemester">Semester</label>
+                                    <select id="filterSemester">
+                                        <option value="">All Semesters</option>
+                                        <!-- Will be populated based on year selection -->
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label for="filterSubject">Subject</label>
+                                    <input type="text" id="filterSubject" placeholder="Search subject">
+                                </div>
+                                <div class="filter-group">
+                                    <label for="datePicker">Date</label>
+                                    <input type="text" id="datePicker" placeholder="Select date">
+                                </div>
+                            </div>
+                            <div class="filter-actions">
+                                <button type="submit" class="btn-primary">
+                                    <i class="fas fa-filter"></i> Apply Filters
+                                </button>
+                                <button type="button" id="clearFilters" class="btn-outline">
+                                    <i class="fas fa-times"></i> Clear Filters
+                                </button>
+                                <button type="button" id="exportRecords" class="btn-secondary">
+                                    <i class="fas fa-file-export"></i> Export
+                                </button>
                         </div>
                     </form>
+                    </div>
 
-                    <!-- Attendance Table -->
+                    <div class="records-card">
                     <div class="table-container">
-                        <table id="attendanceTable" class="attendance-table">
+                            <table id="attendanceTable" class="data-table">
                             <thead>
                                 <tr>
                                     <th>Student Email</th>
                                     <th>Subject</th>
                                     <th>Department</th>
                                     <th>Year</th>
+                                    <th>Semester</th>
                                     <th>Timestamp</th>
                                 </tr>
                             </thead>
@@ -108,18 +347,811 @@
                                 <!-- Records will be populated by JavaScript -->
                             </tbody>
                         </table>
+                        </div>
+                        <div class="pagination">
+                            <button class="page-btn" id="prevPage">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <span id="pageInfo">Page 1 of 1</span>
+                            <button class="page-btn" id="nextPage">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </section>
+
+                <!-- Student Management Section -->
+                <section id="students-section" class="content-section">
+                    <h2 class="section-title">Student Management</h2>
+                    
+                    <div class="students-actions">
+                        <button id="addStudentBtn" class="btn-primary">
+                            <i class="fas fa-plus"></i> Add New Student
+                        </button>
+                        <button id="importStudentsBtn" class="btn-secondary">
+                            <i class="fas fa-file-import"></i> Import Students
+                        </button>
+                    </div>
+
+                    <div class="filter-card">
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label for="studentSearchInput">Search Students</label>
+                                <div class="search-input">
+                                    <input type="text" id="studentSearchInput" placeholder="Search by name or email">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                            </div>
+                            <div class="filter-group">
+                                <label for="studentDepartmentFilter">Department</label>
+                                <select id="studentDepartmentFilter">
+                                    <option value="">All Departments</option>
+                                    <option value="AIDS">AI & Data Science</option>
+                                    <option value="CY">Cyber Security</option>
+                                    <option value="CSE">Computer Science</option>
+                                    <option value="AIML">AI & Machine Learning</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="studentYearFilter">Year</label>
+                                <select id="studentYearFilter">
+                                    <option value="">All Years</option>
+                                    <option value="FY">First Year</option>
+                                    <option value="SY">Second Year</option>
+                                    <option value="TY">Third Year</option>
+                                    <option value="LY">Final Year</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="records-card">
+                        <div class="table-container">
+                            <table id="studentsTable" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Department</th>
+                                        <th>Year</th>
+                                        <th>Semester</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination">
+                            <button class="page-btn" id="studentsPrevPage">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <span id="studentsPageInfo">Page 1 of 1</span>
+                            <button class="page-btn" id="studentsNextPage">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Student Modal -->
+                    <div id="studentModal" class="modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 id="studentModalTitle">Add New Student</h3>
+                                <button class="close-modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="studentForm">
+                                    <input type="hidden" id="studentId">
+                                    <div class="form-group">
+                                        <label for="studentName">Full Name <span class="required">*</span></label>
+                                        <input type="text" id="studentName" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="studentEmail">Email <span class="required">*</span></label>
+                                        <input type="email" id="studentEmail" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="studentDepartment">Department <span class="required">*</span></label>
+                                        <select id="studentDepartment" required>
+                                            <option value="">Select Department</option>
+                                            <option value="AIDS">AI & Data Science</option>
+                                            <option value="CY">Cyber Security</option>
+                                            <option value="CSE">Computer Science</option>
+                                            <option value="AIML">AI & Machine Learning</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="studentYear">Year <span class="required">*</span></label>
+                                        <select id="studentYear" required>
+                                            <option value="">Select Year</option>
+                                            <option value="FY">First Year</option>
+                                            <option value="SY">Second Year</option>
+                                            <option value="TY">Third Year</option>
+                                            <option value="LY">Final Year</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="studentSemester">Semester <span class="required">*</span></label>
+                                        <select id="studentSemester" required>
+                                            <option value="">Select Semester</option>
+                                            <!-- Will be populated based on year selection -->
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="studentPassword">Password <span class="required" id="passwordRequired">*</span></label>
+                                        <input type="password" id="studentPassword" placeholder="Minimum 6 characters" required>
+                                        <small class="form-text">Password must be at least 6 characters long</small>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="cancelStudentBtn" class="btn-outline">Cancel</button>
+                                <button id="saveStudentBtn" class="btn-primary">Save Student</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Faculty Management Section -->
+                <section id="faculty-section" class="content-section">
+                    <h2 class="section-title">Faculty Management</h2>
+                    <div class="faculty-actions">
+                        <button id="addFacultyBtn" class="btn-primary">
+                            <i class="fas fa-plus"></i> Add New Faculty
+                        </button>
+                        <button id="importFacultyBtn" class="btn-secondary">
+                            <i class="fas fa-file-import"></i> Import Faculty Data
+                        </button>
+                    </div>
+
+                    <div class="filter-card">
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label for="facultySearchInput">Search Faculty</label>
+                                <div class="search-input">
+                                    <input type="text" id="facultySearchInput" placeholder="Search by name or email">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                            </div>
+                            <div class="filter-group">
+                                <label for="facultyDepartmentFilter">Department</label>
+                                <select id="facultyDepartmentFilter">
+                                    <option value="">All Departments</option>
+                                    <option value="AIDS">AI & Data Science</option>
+                                    <option value="CY">Cyber Security</option>
+                                    <option value="CSE">Computer Science</option>
+                                    <option value="AIML">AI & Machine Learning</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="facultyStatusFilter">Status</label>
+                                <select id="facultyStatusFilter">
+                                    <option value="">All Status</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="records-card">
+                        <div class="table-container">
+                            <table id="facultyTable" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Department</th>
+                                        <th>Designation</th>
+                                        <th>Subjects</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Course Management Section -->
+                <section id="courses-section" class="content-section">
+                    <h2 class="section-title">Course Management</h2>
+                    <div class="courses-actions">
+                        <button id="addCourseBtn" class="btn-primary">
+                            <i class="fas fa-plus"></i> Add New Course
+                        </button>
+                        <button id="manageCurriculumBtn" class="btn-secondary">
+                            <i class="fas fa-tasks"></i> Manage Curriculum
+                        </button>
+                    </div>
+
+                    <div class="filter-card">
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label for="courseSearchInput">Search Courses</label>
+                                <div class="search-input">
+                                    <input type="text" id="courseSearchInput" placeholder="Search by course name or code">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                            </div>
+                            <div class="filter-group">
+                                <label for="courseDepartmentFilter">Department</label>
+                                <select id="courseDepartmentFilter">
+                                    <option value="">All Departments</option>
+                                    <option value="AIDS">AI & Data Science</option>
+                                    <option value="CY">Cyber Security</option>
+                                    <option value="CSE">Computer Science</option>
+                                    <option value="AIML">AI & Machine Learning</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="courseSemesterFilter">Semester</label>
+                                <select id="courseSemesterFilter">
+                                    <option value="">All Semesters</option>
+                                    <!-- Will be populated based on department -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="records-card">
+                        <div class="table-container">
+                            <table id="coursesTable" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Course Code</th>
+                                        <th>Course Name</th>
+                                        <th>Department</th>
+                                        <th>Credits</th>
+                                        <th>Semester</th>
+                                        <th>Faculty</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Timetable Section -->
+                <section id="timetable-section" class="content-section">
+                    <h2 class="section-title">Timetable Management</h2>
+                    <div class="timetable-actions">
+                        <button id="generateTimetableBtn" class="btn-primary">
+                            <i class="fas fa-magic"></i> Generate Timetable
+                        </button>
+                        <button id="editTimetableBtn" class="btn-secondary">
+                            <i class="fas fa-edit"></i> Edit Timetable
+                        </button>
+                        <button id="publishTimetableBtn" class="btn-success">
+                            <i class="fas fa-share"></i> Publish Timetable
+                        </button>
+                    </div>
+
+                    <div class="filter-card">
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label for="timetableDepartment">Department</label>
+                                <select id="timetableDepartment">
+                                    <option value="">Select Department</option>
+                                    <option value="AIDS">AI & Data Science</option>
+                                    <option value="CY">Cyber Security</option>
+                                    <option value="CSE">Computer Science</option>
+                                    <option value="AIML">AI & Machine Learning</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="timetableYear">Year</label>
+                                <select id="timetableYear">
+                                    <option value="">Select Year</option>
+                                    <option value="FY">First Year</option>
+                                    <option value="SY">Second Year</option>
+                                    <option value="TY">Third Year</option>
+                                    <option value="LY">Final Year</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="timetableSemester">Semester</label>
+                                <select id="timetableSemester">
+                                    <option value="">Select Semester</option>
+                                    <!-- Will be populated based on year -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timetable-container">
+                        <div class="timetable-grid">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Examinations Section -->
+                <section id="exams-section" class="content-section">
+                    <h2 class="section-title">Examination Management</h2>
+                    <div class="exams-actions">
+                        <button id="scheduleExamBtn" class="btn-primary">
+                            <i class="fas fa-plus"></i> Schedule New Exam
+                        </button>
+                        <button id="manageSeatingBtn" class="btn-secondary">
+                            <i class="fas fa-chair"></i> Manage Seating
+                        </button>
+                        <button id="assignInvigilatorsBtn" class="btn-info">
+                            <i class="fas fa-user-check"></i> Assign Invigilators
+                        </button>
+                    </div>
+
+                    <div class="filter-card">
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label for="examType">Exam Type</label>
+                                <select id="examType">
+                                    <option value="">All Types</option>
+                                    <option value="internal">Internal Assessment</option>
+                                    <option value="semester">Semester End</option>
+                                    <option value="practical">Practical</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="examDepartment">Department</label>
+                                <select id="examDepartment">
+                                    <option value="">All Departments</option>
+                                    <option value="AIDS">AI & Data Science</option>
+                                    <option value="CY">Cyber Security</option>
+                                    <option value="CSE">Computer Science</option>
+                                    <option value="AIML">AI & Machine Learning</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="examStatus">Status</label>
+                                <select id="examStatus">
+                                    <option value="">All Status</option>
+                                    <option value="upcoming">Upcoming</option>
+                                    <option value="ongoing">Ongoing</option>
+                                    <option value="completed">Completed</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="records-card">
+                        <div class="table-container">
+                            <table id="examsTable" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Exam Name</th>
+                                        <th>Type</th>
+                                        <th>Department</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Results Section -->
+                <section id="results-section" class="content-section">
+                    <h2 class="section-title">Results Management</h2>
+                    <div class="results-actions">
+                        <button id="uploadResultsBtn" class="btn-primary">
+                            <i class="fas fa-upload"></i> Upload Results
+                        </button>
+                        <button id="generateGradesBtn" class="btn-secondary">
+                            <i class="fas fa-calculator"></i> Generate Grades
+                        </button>
+                        <button id="publishResultsBtn" class="btn-success">
+                            <i class="fas fa-share"></i> Publish Results
+                        </button>
+                    </div>
+
+                    <div class="filter-card">
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label for="resultsDepartment">Department</label>
+                                <select id="resultsDepartment">
+                                    <option value="">All Departments</option>
+                                    <option value="AIDS">AI & Data Science</option>
+                                    <option value="CY">Cyber Security</option>
+                                    <option value="CSE">Computer Science</option>
+                                    <option value="AIML">AI & Machine Learning</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="resultsExamType">Exam Type</label>
+                                <select id="resultsExamType">
+                                    <option value="">All Types</option>
+                                    <option value="internal">Internal Assessment</option>
+                                    <option value="semester">Semester End</option>
+                                    <option value="practical">Practical</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="resultsStatus">Status</label>
+                                <select id="resultsStatus">
+                                    <option value="">All Status</option>
+                                    <option value="draft">Draft</option>
+                                    <option value="published">Published</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="records-card">
+                        <div class="table-container">
+                            <table id="resultsTable" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Exam Name</th>
+                                        <th>Department</th>
+                                        <th>Subject</th>
+                                        <th>Total Students</th>
+                                        <th>Pass %</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Library Section -->
+                <section id="library-section" class="content-section">
+                    <h2 class="section-title">Library Management</h2>
+                    <div class="library-actions">
+                        <button id="addBookBtn" class="btn-primary">
+                            <i class="fas fa-plus"></i> Add New Book
+                        </button>
+                        <button id="manageIssuedBtn" class="btn-secondary">
+                            <i class="fas fa-book-reader"></i> Manage Issued Books
+                        </button>
+                        <button id="generateReportBtn" class="btn-info">
+                            <i class="fas fa-file-alt"></i> Generate Report
+                        </button>
+                    </div>
+
+                    <div class="filter-card">
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label for="bookSearchInput">Search Books</label>
+                                <div class="search-input">
+                                    <input type="text" id="bookSearchInput" placeholder="Search by title, author, or ISBN">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                            </div>
+                            <div class="filter-group">
+                                <label for="bookCategory">Category</label>
+                                <select id="bookCategory">
+                                    <option value="">All Categories</option>
+                                    <option value="textbook">Textbooks</option>
+                                    <option value="reference">Reference Books</option>
+                                    <option value="journal">Journals</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="bookStatus">Status</label>
+                                <select id="bookStatus">
+                                    <option value="">All Status</option>
+                                    <option value="available">Available</option>
+                                    <option value="issued">Issued</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="records-card">
+                        <div class="table-container">
+                            <table id="libraryTable" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>ISBN</th>
+                                        <th>Category</th>
+                                        <th>Copies</th>
+                                        <th>Available</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Fees Management Section -->
+                <section id="fees-section" class="content-section">
+                    <h2 class="section-title">Fees Management</h2>
+                    <div class="fees-actions">
+                        <button id="generateChallanBtn" class="btn-primary">
+                            <i class="fas fa-file-invoice"></i> Generate Challan
+                        </button>
+                        <button id="recordPaymentBtn" class="btn-secondary">
+                            <i class="fas fa-rupee-sign"></i> Record Payment
+                        </button>
+                        <button id="feesReportBtn" class="btn-info">
+                            <i class="fas fa-chart-pie"></i> Fees Report
+                        </button>
+                    </div>
+
+                    <div class="filter-card">
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label for="feesSearchInput">Search Student</label>
+                                <div class="search-input">
+                                    <input type="text" id="feesSearchInput" placeholder="Search by name or ID">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                            </div>
+                            <div class="filter-group">
+                                <label for="feesDepartment">Department</label>
+                                <select id="feesDepartment">
+                                    <option value="">All Departments</option>
+                                    <option value="AIDS">AI & Data Science</option>
+                                    <option value="CY">Cyber Security</option>
+                                    <option value="CSE">Computer Science</option>
+                                    <option value="AIML">AI & Machine Learning</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="feesStatus">Payment Status</label>
+                                <select id="feesStatus">
+                                    <option value="">All Status</option>
+                                    <option value="paid">Paid</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="partial">Partial</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="records-card">
+                        <div class="table-container">
+                            <table id="feesTable" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Student Name</th>
+                                        <th>Department</th>
+                                        <th>Year</th>
+                                        <th>Total Fees</th>
+                                        <th>Paid Amount</th>
+                                        <th>Balance</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Notifications Section -->
+                <section id="notifications-section" class="content-section">
+                    <h2 class="section-title">Notifications & Announcements</h2>
+                    <div class="notifications-actions">
+                        <button id="createNotificationBtn" class="btn-primary">
+                            <i class="fas fa-plus"></i> Create Notification
+                        </button>
+                        <button id="scheduleNotificationBtn" class="btn-secondary">
+                            <i class="fas fa-clock"></i> Schedule Notification
+                        </button>
+                    </div>
+
+                    <div class="filter-card">
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label for="notificationType">Type</label>
+                                <select id="notificationType">
+                                    <option value="">All Types</option>
+                                    <option value="general">General</option>
+                                    <option value="academic">Academic</option>
+                                    <option value="exam">Examination</option>
+                                    <option value="event">Event</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="notificationStatus">Status</label>
+                                <select id="notificationStatus">
+                                    <option value="">All Status</option>
+                                    <option value="active">Active</option>
+                                    <option value="scheduled">Scheduled</option>
+                                    <option value="expired">Expired</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="notifications-container">
+                        <div class="notifications-list">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Edit Attendance Section -->
+                <section id="attendance-edit-section" class="content-section">
+                    <h2 class="section-title">Edit Attendance</h2>
+                    
+                    <div class="filter-card">
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label for="editAttendanceDepartment">Department</label>
+                                <select id="editAttendanceDepartment">
+                                    <option value="">Select Department</option>
+                                    <option value="AIDS">AI & Data Science</option>
+                                    <option value="CY">Cyber Security</option>
+                                    <option value="CSE">Computer Science</option>
+                                    <option value="AIML">AI & Machine Learning</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="editAttendanceYear">Year</label>
+                                <select id="editAttendanceYear">
+                                    <option value="">Select Year</option>
+                                    <option value="FY">First Year</option>
+                                    <option value="SY">Second Year</option>
+                                    <option value="TY">Third Year</option>
+                                    <option value="LY">Final Year</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="editAttendanceSemester">Semester</label>
+                                <select id="editAttendanceSemester">
+                                    <option value="">All Semesters</option>
+                                    <!-- Will be populated based on year selection -->
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="editAttendanceSubject">Subject</label>
+                                <input type="text" id="editAttendanceSubject" placeholder="Enter subject name">
+                            </div>
+                            <div class="filter-group">
+                                <label for="editAttendanceDate">Date</label>
+                                <input type="text" id="editAttendanceDate" placeholder="Select date">
+                            </div>
+                        </div>
+                        <div class="filter-actions">
+                            <button id="loadAttendanceBtn" class="btn-primary">
+                                <i class="fas fa-filter"></i> Apply Filters
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="attendance-edit-container">
+                        <div class="attendance-summary-card">
+                            <div class="attendance-summary-header">
+                                <h3>Attendance Summary</h3>
+                                <div class="attendance-info">
+                                    <span id="attendanceSubjectInfo"></span>
+                                    <span id="attendanceDateInfo"></span>
+                                </div>
+                            </div>
+                            <div class="attendance-stats">
+                                <div class="attendance-stat">
+                                    <span class="stat-label">Total Students</span>
+                                    <span id="totalStudentsCount" class="stat-value">0</span>
+                                </div>
+                                <div class="attendance-stat">
+                                    <span class="stat-label">Present</span>
+                                    <span id="presentStudentsCount" class="stat-value">0</span>
+                                </div>
+                                <div class="attendance-stat">
+                                    <span class="stat-label">Absent</span>
+                                    <span id="absentStudentsCount" class="stat-value">0</span>
+                                </div>
+                                <div class="attendance-stat">
+                                    <span class="stat-label">Attendance %</span>
+                                    <span id="attendancePercentage" class="stat-value">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="records-card">
+                            <div class="table-container">
+                                <table id="editAttendanceTable" class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Student Name</th>
+                                            <th>Email</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Will be populated by JavaScript -->
+                                        <tr>
+                                            <td colspan="4" class="text-center">Select department and year to view students</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="attendance-actions">
+                            <button id="markAllPresentBtn" class="btn-primary">
+                                <i class="fas fa-check-circle"></i> Mark All Present
+                            </button>
+                            <button id="saveAttendanceChangesBtn" class="btn-secondary">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Reports Section -->
+                <section id="reports-section" class="content-section">
+                    <h2 class="section-title">Attendance Reports</h2>
+                    
+                    <div class="reports-grid">
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="report-details">
+                                <h3>Daily Summary</h3>
+                                <p>Today's attendance summary</p>
+                                <button class="btn-report">Generate</button>
+                            </div>
+                        </div>
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i class="fas fa-calendar-week"></i>
+                            </div>
+                            <div class="report-details">
+                                <h3>Weekly Report</h3>
+                                <p>Week-wise attendance statistics</p>
+                                <button class="btn-report">Generate</button>
+                            </div>
+                        </div>
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <div class="report-details">
+                                <h3>Student Analysis</h3>
+                                <p>Student-wise attendance details</p>
+                                <button class="btn-report">Generate</button>
+                            </div>
+                        </div>
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <div class="report-details">
+                                <h3>Subject Report</h3>
+                                <p>Subject-wise attendance patterns</p>
+                                <button class="btn-report">Generate</button>
+                            </div>
+                        </div>
             </div>
+                </section>
         </div>
     </main>
-
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 ATTENDMAX. All rights reserved.</p>
-            <p>Powered by cutting-edge QR technology</p>
         </div>
-    </footer>
 
     <script src="/static/js/main.js"></script>
     <script src="/static/js/admin-dashboard.js"></script>

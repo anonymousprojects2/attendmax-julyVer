@@ -5,78 +5,296 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard - ATTENDMAX</title>
     <link rel="stylesheet" href="/static/css/style.css">
-    <!-- Add QR Scanner library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
-    <header>
-        <nav>
-            <div class="logo-container">
-                <img src="/static/images/logo.png" alt="ATTENDMAX Logo" id="logo">
-                <span class="brand-name">ATTENDMAX</span>
+<body class="student-body">
+    <div class="student-container">
+        <!-- Sidebar -->
+        <aside class="student-sidebar">
+            <div class="sidebar-header">
+                <img src="/static/images/logo.png" alt="ATTENDMAX Logo" class="sidebar-logo">
+                <h1 class="sidebar-title">ATTENDMAX</h1>
             </div>
-            <ul class="nav-links">
-                <li><a href="/student/dashboard" class="active">Dashboard</a></li>
-                <li><a href="/student/attendance">My Attendance</a></li>
-                <li><a href="/logout" class="login-btn">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main class="dashboard-main">
-        <div class="dashboard-container">
-            <div class="dashboard-header">
-                <h1>Student Dashboard</h1>
-                <p class="welcome-text">Welcome back, <span id="studentName">Student</span></p>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active">
+                        <a href="#overview-section" class="sidebar-link" data-section="overview-section">
+                            <i class="fas fa-home"></i> <span>Overview</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#attendance-section" class="sidebar-link" data-section="attendance-section">
+                            <i class="fas fa-qrcode"></i> <span>Mark Attendance</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#history-section" class="sidebar-link" data-section="history-section">
+                            <i class="fas fa-history"></i> <span>Attendance History</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#timetable-section" class="sidebar-link" data-section="timetable-section">
+                            <i class="fas fa-calendar-alt"></i> <span>Timetable</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#subjects-section" class="sidebar-link" data-section="subjects-section">
+                            <i class="fas fa-book"></i> <span>My Subjects</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#profile-section" class="sidebar-link" data-section="profile-section">
+                            <i class="fas fa-user"></i> <span>Profile</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="/logout" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+                </a>
             </div>
+        </aside>
 
-            <div class="quick-stats">
-                <div class="stat-card">
-                    <h3>Total Classes</h3>
-                    <p class="stat-number" id="totalClasses">0</p>
+        <!-- Main Content -->
+        <main class="student-main">
+            <header class="student-header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
                 </div>
-                <div class="stat-card">
-                    <h3>Classes Attended</h3>
-                    <p class="stat-number" id="classesAttended">0</p>
-                </div>
-                <div class="stat-card">
-                    <h3>Attendance %</h3>
-                    <p class="stat-number" id="attendancePercentage">0%</p>
-                </div>
-            </div>
-
-            <div class="dashboard-sections">
-                <section class="qr-scanner">
-                    <h2>QR Code Scanner</h2>
-                    <div class="scanner-container">
-                        <div id="scanner-placeholder" class="scanner-placeholder">
-                            <button id="startScanner" class="primary-btn">Start Scanner</button>
+                <div class="header-actions">
+                    <button class="btn-icon" id="darkModeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="student-profile">
+                        <span class="student-name" id="studentName">Student</span>
+                        <div class="student-avatar">
+                            <i class="fas fa-user-circle"></i>
                         </div>
-                        <div id="qr-reader" style="width: 100%"></div>
-                        <div id="scanResult" class="scan-result hidden">
-                            <p id="scanMessage"></p>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="student-content">
+                <!-- Overview Section -->
+                <section id="overview-section" class="content-section active">
+                    <h2 class="section-title">Dashboard Overview</h2>
+                    
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chalkboard"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Total Classes</h3>
+                                <p id="totalClasses">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Classes Attended</h3>
+                                <p id="classesAttended">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Attendance %</h3>
+                                <p id="attendancePercentage">0%</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Next Class</h3>
+                                <p id="nextClass">No classes</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-card">
+                            <h3>Overall Attendance</h3>
+                            <div class="pie-chart-wrapper">
+                                <canvas id="attendanceChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Subject-wise Attendance</h3>
+                            <div class="pie-chart-wrapper">
+                                <canvas id="subjectChart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                <section class="attendance-history">
-                    <h2>Recent Attendance</h2>
-                    <div class="attendance-list" id="attendanceList">
-                        <!-- Attendance history will be populated by JavaScript -->
+                <!-- Attendance Section -->
+                <section id="attendance-section" class="content-section">
+                    <h2 class="section-title">Mark Attendance</h2>
+                    
+                    <div class="qr-container">
+                        <div class="qr-instructions">
+                            <div class="instruction-card">
+                                <div class="instruction-icon">
+                                    <i class="fas fa-qrcode"></i>
+                                </div>
+                                <div class="instruction-text">
+                                    <h4>Scan QR Code</h4>
+                                    <p>Use your device's camera to scan the QR code shown by your teacher</p>
+                                </div>
+                            </div>
+                            <div class="instruction-card">
+                                <div class="instruction-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="instruction-text">
+                                    <h4>Verify Details</h4>
+                                    <p>Confirm the subject and class details before marking attendance</p>
+                                </div>
+                            </div>
+                            <div class="instruction-card">
+                                <div class="instruction-icon">
+                                    <i class="fas fa-history"></i>
+                                </div>
+                                <div class="instruction-text">
+                                    <h4>Track History</h4>
+                                    <p>View your attendance history and statistics</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="scanner-container">
+                            <div id="scanner-placeholder" class="scanner-placeholder">
+                                <button id="startScanner" class="primary-btn">
+                                    <i class="fas fa-camera"></i> Start Scanner
+                                </button>
+                                <p class="scanner-hint">Position the QR code within the frame</p>
+                            </div>
+                            <div id="qr-reader"></div>
+                            <div id="scanResult" class="scan-result hidden">
+                                <p id="scanMessage"></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- History Section -->
+                <section id="history-section" class="content-section">
+                    <h2 class="section-title">Attendance History</h2>
+                    
+                    <div class="filter-card">
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label for="historySubject">Subject</label>
+                                <select id="historySubject">
+                                    <option value="">All Subjects</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="historyMonth">Month</label>
+                                <select id="historyMonth">
+                                    <option value="">All Time</option>
+                                </select>
+                            </div>
+                            <div class="filter-actions">
+                                <button class="btn-primary" id="applyFilters">
+                                    <i class="fas fa-filter"></i> Apply Filters
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="records-card">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Subject</th>
+                                        <th>Time</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="attendanceList">
+                                    <!-- Will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination">
+                            <button class="page-btn" id="prevPage">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <span id="pageInfo">Page 1 of 1</span>
+                            <button class="page-btn" id="nextPage">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Timetable Section -->
+                <section id="timetable-section" class="content-section">
+                    <h2 class="section-title">Class Timetable</h2>
+                    <div class="timetable-container">
+                        <div class="timetable-grid" id="timetableGrid">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Subjects Section -->
+                <section id="subjects-section" class="content-section">
+                    <h2 class="section-title">My Subjects</h2>
+                    <div class="subjects-grid" id="subjectsGrid">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </section>
+
+                <!-- Profile Section -->
+                <section id="profile-section" class="content-section">
+                    <h2 class="section-title">My Profile</h2>
+                    <div class="profile-container">
+                        <div class="profile-header">
+                            <div class="profile-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="profile-info">
+                                <h3 id="profileName">Student Name</h3>
+                                <p id="profileEmail">student@example.com</p>
+                            </div>
+                        </div>
+                        <div class="profile-details">
+                            <div class="detail-group">
+                                <label>Department</label>
+                                <p id="profileDepartment">Computer Science</p>
+                            </div>
+                            <div class="detail-group">
+                                <label>Year</label>
+                                <p id="profileYear">Third Year</p>
+                            </div>
+                            <div class="detail-group">
+                                <label>Roll Number</label>
+                                <p id="profileRoll">CS2021001</p>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
 
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 ATTENDMAX. All rights reserved.</p>
-            <p>Powered by cutting-edge QR technology</p>
-        </div>
-    </footer>
-
-    <script src="/static/js/main.js"></script>
     <script src="/static/js/student-dashboard.js"></script>
 </body>
 </html>

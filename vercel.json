@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "static/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "templates/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/templates/$1.html"
+    },
+    {
+      "src": "/",
+      "dest": "/templates/index.html"
+    }
+  ],
+  "env": {
+    "BACKEND_URL": "https://attendmax-api.onrender.com"
+  }
+} 
