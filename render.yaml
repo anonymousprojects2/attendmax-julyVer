@@ -3,7 +3,7 @@ services:
     name: attendmax-api
     env: python
     buildCommand: ./build.sh
-    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    startCommand: gunicorn wsgi:app --bind 0.0.0.0:$PORT
     healthCheckPath: /
     envVars:
       - key: FLASK_ENV
@@ -11,6 +11,6 @@ services:
       - key: FLASK_APP
         value: app.py
       - key: PYTHON_VERSION
-        value: 3.9.18
+        value: 3.9.12
       - key: FIREBASE_CREDENTIALS
         sync: false # This will be manually added in Render dashboard 
